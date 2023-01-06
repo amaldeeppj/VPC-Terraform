@@ -8,6 +8,23 @@ Terraform module which creates VPC resources on AWS.
 
 ```
 
+module "vpc" {
+    source = "github.com/amaldeeppj/VPC-Terraform.git"
+
+    common_name_tag = new-project
+    vpc_cidr = "172.16.0.0/16"
+    public_subnet_names = ["public-1", "public-2", "public-3"]
+    public_subnet_cidr = ["172.16.0.0/20", "172.16.16.0/20", "172.16.32.0/20"]
+    public_subnet_azs = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
+    private_subnet_names = ["private-1", "private-2", "private-3"]
+    private_subnet_cidr = ["172.16.48.0/20", "172.16.64.0/20", "172.16.80.0/20"] 
+    private_subnet_azs = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
+
+    common_tags = {
+        env = dev
+    }
+}
+
 ```
 
 
@@ -33,7 +50,7 @@ AWS | >= v4.48.0
 
 
 
-# Argument Reference
+## Argument Reference
 
 * common_name_tag
 * common_tags
@@ -47,7 +64,7 @@ AWS | >= v4.48.0
 
 
 
-# Attributes Reference
+## Attributes Reference
 
 * vpc_id
 * public_subnets
