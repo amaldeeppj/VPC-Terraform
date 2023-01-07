@@ -1,54 +1,42 @@
-variable "common_name_tag" {
-    type = string
-    description = "Common name tag to identify resources"
+# variable "region" {
+#     type = string
+#     description = "Region to deploy resources"
   
-}
-
-variable "common_tags" {
-    type = map(string)
-    description = "Common tags for resources"
-    default = {}
-  
-}
+# }
 
 variable "vpc_cidr" {
-  type        = string
-  description = "CIDR for VPC"
-
-}
-
-variable "public_subnet_names" {
-    type = list(string)
-    description = "Name list for public subnets"
+    type = string
+    default = "172.16.0.0/16"
+    description = "CIDR for VPC, default CIDR is 172.16.0.0/16"
   
 }
 
-variable "public_subnet_cidr" {
-    type = list(string)
-    description = "CIDR list for public subnets"
+variable "project" {
+    type = string
+    description = "Project name, to be added in the name tag"
   
 }
 
-variable "public_subnet_azs" {
-    type = list(string)
-    description = "CIDR list for public subnets"
+variable "environment" {
+    type = string 
+    description = "Project environment, to be added in the name tag"
   
 }
 
-variable "private_subnet_names" {
-    type = list(string)
-    description = "Name list for public subnets"
-  
+variable "enable_nat_gateway" {
+    type = bool 
+    default = false
+    description = "Should be true to enable nat gateway, There will be only one nat gateway, which will be shared by all private subnets"
 }
 
-variable "private_subnet_cidr" {
-    type = list(string)
-    description = "CIDR list for public subnets"
-  
+
+locals {
+  common_tags = {
+    project = var.project 
+    environment = var.environment 
+  }
 }
 
-variable "private_subnet_azs" {
-    type = list(string)
-    description = "CIDR list for public subnets"
-  
+locals {
+    azs = length(data.aws_availability_zones.available.names)
 }
